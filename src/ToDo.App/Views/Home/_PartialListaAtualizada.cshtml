@@ -1,0 +1,20 @@
+﻿@model  ToDo.App.Models.ListaViewModel
+
+<td class="text-left">
+    <a href="#" id="btn-alt-modal-@Model.Id" class="ls-tooltip-top-left" aria-label="Cliquei aqui para editar" data-url="@Url.Action("AltTarefa", "Home", new { @id = Model.Id })"> @Model.Titulo</a>
+</td>
+<td class="text-center">
+@Model.Data
+</td>
+@if (Model.Finalizado)
+{
+    <td class="text-center">
+        Concluido
+    </td>
+}
+else
+{
+    <td class="text-center">
+        Em Andamento
+    </td>
+}

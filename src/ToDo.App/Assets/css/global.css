@@ -1,0 +1,73 @@
+﻿body {
+    margin-top: 70px;
+    padding-top: 5px;
+}
+
+.main {
+    padding: 5px;
+    padding-top: 50px;
+}
+
+table#tbRelatorio {
+    font-size: 9pt;
+}
+
+    /*table#tbRelatorio thead tr {
+
+
+    background-color: rgba(9, 9, 9, 0.88) !important;
+    color: #fff;
+
+}*/
+
+table#tbRelatorio tbody tr:hover td {
+    background-color: rgba(169, 250, 240, 0.39) !important;
+}
+
+span.field-validation-error {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    color: #f00;
+}
+
+div.validation-summary-errors {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    color: #f00;
+}
+
+#contador {
+    font-size: 8pt;
+}
+
+.backPage {
+    height: 50px;
+    width: 50px;
+}
+
+.backPage:hover {
+    height: 55px;
+    width: 55px;
+}
+
+#loading {
+    display: none;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    text-align: center;
+    overflow-x: auto;
+    overflow-y: scroll;
+    z-index: 16;
+    backface-visibility: hidden;
+    background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;
+}
+
+#modelLabel {
+    text-align:center;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+
+}

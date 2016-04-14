@@ -1,0 +1,77 @@
+﻿@using PagedList.Mvc;
+@model ToDo.App.Models.ObsViewModel
+
+@{
+    var ajaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        HttpMethod = "POST",
+        UpdateTargetId = "modelContent",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "retornoModalAjax"
+
+    };
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="modelLabel">Comentarios realizados...</h4>
+</div>
+
+<div class="modal-body">
+    @*<div>
+        <div class="panel panel-default ">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+            </div>
+            <div class="well-lg">
+                <div class="row">
+                    <div class="form-group col-lg-10 col-xs-10 col-sm-10">
+                        Observação Completa:
+                        <br /><br />
+                        @Html.Raw(Model.Observacao.ToString())
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>*@
+        @{
+            var contador = 0;
+
+            foreach (var item in Model.Observacoes)
+            {
+                const string prefixo = "obs";
+
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#@prefixo@contador">
+                                    Observação feita dia @item.Date
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="@prefixo@contador" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                @item.Descricao
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                contador++;
+            }
+        }
+
+    </div>
+
+</div>
+@using (Ajax.BeginForm("AltTarefa", "Home", null, ajaxOptions, new { @id = "formReport" }))
+{
+    <div class="ls-modal-footer">
+        <a id="btn-voltar-modal-@Model.Id" href="#" data-url="@Url.Action("AltTarefa", "Home", new { @id = Model.Id })">
+            <img src="@Url.Content("~/Assets/img/Back.jpg")" title=" voltar" class="backPage" />
+        </a>
+    </div>
+}
+

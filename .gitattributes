@@ -1,0 +1,57 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+## Custom for Visual Studio
+##*.cs diff=csharp
+##*.sln eol=crlf merge=union
+##*.csproj merge=union
+##*.vbproj merge=union
+##*.fsproj merge=union
+##*.dbproj merge=union
+
+# Documents
+*.doc diff=astextplain
+*.DOC diff=astextplain
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.dot diff=astextplain
+*.DOT diff=astextplain
+*.pdf diff=astextplain
+*.PDF diff=astextplain
+*.rtf diff=astextplain
+*.RTF diff=astextplain
+
+# These files are text and should be normalized (convert CRLF => LF)
+*.php text
+*.css text
+*.js text
+*.htm text
+*.html text
+*.xml text
+*.txt text
+*.ini text
+*.inc text
+.htaccess text
+
+# Graphics
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg text
+
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eof binary
+*.woff binary

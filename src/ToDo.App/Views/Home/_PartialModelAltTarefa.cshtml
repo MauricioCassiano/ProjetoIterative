@@ -1,0 +1,72 @@
+﻿
+@model  ToDo.App.Models.TarefaViewModel
+@{
+    ViewBag.Title = "Alterar";
+}
+
+@{
+    var ajaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        HttpMethod = "POST",
+        UpdateTargetId = "modelContent",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "retornoModalAjax(0,'/Home/UpLista/'," + Model.IdTarefa + ")"
+
+    };
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="modelLabel">Alterando tarefa...</h4>
+</div>
+
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("AltTarefa", "Home", null, ajaxOptions, new { @id = "formReport" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="panel panel-default ">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+            </div>
+            <div class="well-lg">
+                <div class="row">
+                    <div class="form-group col-lg-12 col-xs-12 col-sm-12">
+                        Titulo
+                        @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Titulo)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-9 col-xs-10 col-sm-10">
+                        Observações:
+                        @Html.TextAreaFor(m => m.Observacao, new { @class = "form-control", @rows = "4", @placeholder = "Digite a interação da tarefa" })
+                        @Html.ValidationMessageFor(m => m.Observacao)
+                        <p id="contador">600 Caracteres</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-2 col-xs-2 col-sm-2">
+                        Concluido
+                    </div>
+                    <div class="form-group col-lg-2 col-xs-2 col-sm-2">
+                        @Html.CheckBoxFor(m => m.Finalizado, new { @class = "checkbox" })
+                        @Html.ValidationMessageFor(m => m.Finalizado)
+                    </div>
+                    <a id="btn-obs-modal-@Model.IdTarefa" href="#" data-url="@Url.Action("ObsTarefa", "Home", new { @id = Model.IdTarefa })">Para verificar ultimas 15 interações</a>
+                </div>
+                @Html.HiddenFor(x => x.IdTarefa)
+                <div class="row">
+                    <div class="form-group col-lg-2 col-xs-2 col-sm-2">
+                        <button type="submit" class="btn btn-default">Alterar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    <div id="modelAlert"></div>
+</div>

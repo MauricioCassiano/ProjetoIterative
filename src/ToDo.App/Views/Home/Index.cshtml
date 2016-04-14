@@ -1,0 +1,96 @@
+﻿@using PagedList.Mvc;
+@model ToDo.App.Models.HomeViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1><span class="glyphicon glyphicon-blackboard"></span> Gerenciamento</h1>
+
+<div class="panel panel-default ">
+    <div class="panel-heading">
+        <h3 class="panel-title">Cadastrar tarefa</h3>
+    </div>
+    <div class="well-lg">
+        <form class="form-inline">
+            <div class="form-group">
+                <button type="button" id="btn-add-modal" class="btn btn-default" data-url="@Url.Action("AddTarefa", "Home")">Nova tarefa</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default ">
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">Lista de Tarefas </h3>
+    </div>
+    <div class="well-lg">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="form-group col-lg-2 col-xs-2 col-sm-2">
+                Concluidos
+                @Html.CheckBoxFor(m => m.Concluido, new { @class = "checkbox" })
+                @Html.ValidationMessageFor(m => m.Concluido)
+            </div>
+
+            <div class="form-group col-lg-2 col-xs-2 col-sm-2">
+                Em andamento
+                @Html.CheckBoxFor(m => m.Andamento, new { @class = "checkbox" })
+                @Html.ValidationMessageFor(m => m.Andamento)
+            </div>
+
+            <div class="form-group col-lg-2 col-xs-2 col-sm-2">
+
+                <button type="submit" class="btn btn-default">Filtrar</button>
+                    @*@Html.ActionLink("Filtrar", "Index", "Home", new { concluido = Model.Concluido == true ? 1 : 0, andamento = Model.Concluido == true ? 1 : 0 }, new { @class = "btn btn-default", id = "Filtrar" })*@
+            </div>
+          }
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="tbRelatorio">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Titulo Tarefa</th>
+                                <th class="text-center">Data Criação</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.RelatorioTarefas)
+                            {
+                                <tr id="Tarefa@(item.Id)">
+                                    <td class="text-left">
+                                        <a href="#"  id="btn-alt-modal-@item.Id" class="ls-tooltip-top-left" aria-label="Cliquei aqui para editar" data-url="@Url.Action("AltTarefa", "Home", new { @id = item.Id })"> @item.Titulo</a>
+                                    </td>
+                                    <td class="text-center">
+                                        @item.Date
+                                    </td>
+                                    @if (item.Finalizado)
+                                    {
+                                        <td class="text-center">
+                                            Concluido
+                                        </td>
+                                    }
+                                    else {
+                                    <td class="text-center">
+                                        Em Andamento
+                                    </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h7 class="text-right">Pagina @(Model.RelatorioTarefas.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.RelatorioTarefas.PageCount</h7>
+@Html.PagedListPager(Model.RelatorioTarefas, page => Url.Action("Index", new {page}))
